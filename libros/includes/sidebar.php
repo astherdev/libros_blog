@@ -11,25 +11,17 @@
         
         <?php  session_start(); ?>
         <?php
-        if (!empty($_SESSION['usuario_nombre'])){ ?>
+        if (isset($_SESSION['usuario_nombre']) && isset($_SESSION['usuario_apellidos'])){ ?>
             <div id="usuario-logueado" class="bloque">
-                <h3>Bienvenido, <?= $_SESSION['usuario_nombre']; ?></h3>
-                <a href="crear-entradas.php" class="boton boton-verde">Crear entradas</a>
-                <a href="crear-categoria.php" class="boton">Crear categoría</a>
-                <a href="mis-datos.php" class="boton boton-naranja">Mis datos</a>
-                <a href="cerrar.php" class="boton boton-rojo">Cerrar sesión</a>
+            <h3>Bienvenido, <?= $_SESSION['usuario_nombre'] . ' ' . $_SESSION['usuario_apellidos']; ?></h3>
+            <a href="crear-entradas.php" class="boton boton-verde">Crear entradas</a>
+            <a href="crear-categoria.php" class="boton">Crear categoría</a>
+            <a href="mis-datos.php" class="boton boton-naranja">Mis datos</a>
+            <a href="cerrar.php" class="boton boton-rojo">Cerrar sesión</a>
             </div>
         <?php }; ?>
-        
         <div id="login" class="bloque">
             <h3>Inicia Sesión</h3>
-            <!-- Mostrar mensaje de éxito -->
-            <?php if (isset($_SESSION['exito-login'])){ ?>
-                <div class="alerta alerta-exito-login">
-                    <?= $_SESSION['exito-login']; ?>
-                </div>
-                <?php unset($_SESSION['exito-login']);  ?>
-            <?php }; ?>
             <?php
             if (isset($_SESSION['error-login'])){ ?>
                 <div class="alerta alerta-error">

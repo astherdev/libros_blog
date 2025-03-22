@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(password_verify($password, $row['password'])){
             $_SESSION['usuario_id'] = $row['id'];
             $_SESSION['usuario_nombre'] = $row['nombre'];
-            $_SESSION['exito-login'] = "Bienvenido";
+            $_SESSION['usuario_apellidos'] = $row['apellidos'];
             header('Location: index.php');
             exit();
         }else {
