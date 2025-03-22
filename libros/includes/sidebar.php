@@ -14,7 +14,7 @@
         if (isset($_SESSION['usuario_nombre']) && isset($_SESSION['usuario_apellidos'])){ ?>
             <div id="usuario-logueado" class="bloque">
             <h3>Bienvenido, <?= $_SESSION['usuario_nombre'] . ' ' . $_SESSION['usuario_apellidos']; ?></h3>
-            <a href="crear-entradas.php" class="boton boton-verde">Crear entradas</a>
+            <a href="crear-entrada.php" class="boton boton-verde">Crear entradas</a>
             <a href="crear-categoria.php" class="boton">Crear categoría</a>
             <a href="mis-datos.php" class="boton boton-naranja">Mis datos</a>
             <a href="cerrar.php" class="boton boton-rojo">Cerrar sesión</a>
