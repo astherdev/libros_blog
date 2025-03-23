@@ -1,23 +1,32 @@
 <?php
-require_once ("includes/conexion.php");
+session_start();
+require_once("includes/conexion.php");
 
-if (isset($_POST["nombre"])) {
-    $nombre = trim($_POST['nombre']);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = trim($_POST["nombre"]);
 
     if (!empty($nombre)) {
-        $sql = "INSERT INTO categorias (nombre) VALUES ('$nombre')";
-        $resultado = mysqli_query($conexion, $sql);
+        // Preparar la consulta para insertar la categoría
+        $stmt = $conexion->prepare("INSERT INTO categorias (nombre) VALUES (?)");
+        $stmt->bind_param("s", $nombre);
 
-        if ($resultado) {
-            echo "Categoria creada correctamente";
-            header("Refresh: 3; URL=index.php");
+        if ($stmt->execute()) {
+            // Guardamos el mensaje en la sesión
+            $_SESSION['mensaje'] = "Categoría creada correctamente";
+            $_SESSION['tipo_mensaje'] = "exito";
         } else {
-            echo "Error al guardar la categoría: " . mysqli_error($conexion);
+            $_SESSION['mensaje'] = "Error al guardar la categoría";
+            $_SESSION['tipo_mensaje'] = "error";
         }
-    } else {
-        echo "El nombre de la categoría no puede estar vacío.";
-    }
-}
 
-mysqli_close($conexion);
+        $stmt->close();
+    } else {
+        $_SESSION['mensaje'] = "El nombre de la categoría no puede estar vacío";
+        $_SESSION['tipo_mensaje'] = "error";
+    }
+
+    $conexion->close();
+    header("Location: index.php"); // Redirige al index
+    exit();
+}
 ?>
