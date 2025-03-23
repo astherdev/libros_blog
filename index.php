@@ -13,7 +13,7 @@ $resultado = mysqli_query($conexion, $sql);
 
     <?php while ($entrada = mysqli_fetch_assoc($resultado)): ?>
         <article class="entrada">
-            <a href="entrada.php?id=<?=$entrada['id']?>">
+            <a href="entradas.php?id=<?=$entrada['id']?>">
                 <h2><?=$entrada['titulo']?></h2>
                 <span class="fecha"><strong><?=$entrada['fecha']?> | <?=$_SESSION['usuario_nombre'] . ' ' . $_SESSION['usuario_apellidos']?></strong></span>
                 <p>
@@ -24,7 +24,7 @@ $resultado = mysqli_query($conexion, $sql);
     <?php endwhile; ?>
     
     <div id="ver-todas">
-        <a href="entradas.php">Ver todas las entradas</a>
+        <center><button type="button" onclick="window.location.href='todas-las-entradas.php'" class="boton boton-azul"> Ver todas las entradas</button></center>
     </div>
 </div> <!--fin principal-->
 

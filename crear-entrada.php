@@ -45,8 +45,8 @@ require_once("includes/conexion.php");
             ?>
         </select> <br>
 
-        <center><button type="button" class="boton boton-azul"> Publicar</button></center>
-        <center><button type="button" class="boton boton-verde"> Editar Entradas</button></center>
+        <center><button type="submit" class="boton boton-azul"> Publicar</button></center> 
+        <center><button type="button" onclick="window.location.href='editar_entradas.php'" class="boton boton-verde"> Editar Entradas</button></center>
     </form>
 
     <h2>Entradas recientes</h2>
