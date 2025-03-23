@@ -60,7 +60,7 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email" value="<?= htmlspecialchars($usuario['email']) ?>" readonly>
 
-                <button type="button" onclick="window.location.href='edicion_datos.php'" class="boton boton-naranja">Editar Datos</button>
+                <center><button type="button" onclick="window.location.href='edicion_datos.php'" class="boton boton-naranja">Editar Datos</button></center>
             </form>
         </div>
 

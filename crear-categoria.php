@@ -7,7 +7,7 @@ require_once ("includes/conexion.php");
 <head>
     <meta charset="UTF-8">
     <title>Crear Categoría</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/libros/css/style.css">
 </head>
 <body>
     <?php include 'includes/header.php'; ?>

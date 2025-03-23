@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['usuario_id'])) {
+if(!isset($_SESSION['id'])) {
     header("Location: index.php");
     exit();
 }
@@ -13,10 +13,14 @@ require_once("includes/conexion.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Entrada</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-    <h2>Crear Nueva Entrada</h2>
+    <br>
+    <?php include 'includes/header.php'; ?>
+    <br>
+    <h2><center>Crear Nueva Entrada</center></h2>
+    <br>
     <form action="guardar-entrada.php" method="POST">
         <label for="titulo">Título:</label>
         <input type="text" name="titulo" required> <br>
@@ -41,10 +45,14 @@ require_once("includes/conexion.php");
             ?>
         </select> <br>
 
-        <button type="submit">Publicar</button>
+        <center><button type="button" class="boton boton-azul"> Publicar</button></center>
+        <center><button type="button" class="boton boton-verde"> Editar Entradas</button></center>
     </form>
 
     <h2>Entradas recientes</h2>
+    <br>
+    <?php include 'includes/footer.php'; ?>
+    <br>
 </body>
 </html>
 

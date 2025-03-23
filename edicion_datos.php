@@ -99,10 +99,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label>Nueva Contraseña (si deseas cambiarla):</label>
             <input type="password" name="password_nuevo">
 
-            <button type="submit" class="boton boton-verde">Guardar Cambios</button>
+            <center><button type="submit" class="boton boton-verde">Guardar Cambios</button></center>
         </form>
 
-        <button onclick="window.location.href='mis-datos.php'" class="boton boton-azul">Cancelar</button>
+        <center><button onclick="window.location.href='mis-datos.php'" class="boton boton-azul">Cancelar</button></center>
     </div>
 
     <?php include 'includes/footer.php'; ?>
