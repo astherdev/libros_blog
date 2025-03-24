@@ -1,55 +1,57 @@
 <?php
-require_once 'includes/conexion.php';
-require_once 'includes/header.php';
-require_once 'includes/sidebar.php';
-
-
+session_start();
 if(!isset($_SESSION['id'])) {
     header("Location: index.php");
     exit();
 }
-
-require_once "includes/conexion.php";
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $titulo = $conexion->real_escape_string($_POST['titulo']);
-    $descripcion = $conexion->real_escape_string($_POST['descripcion']);
-    $categoria_id = $conexion->real_escape_string($_POST['categoria']);
-    
-    $sql = "INSERT INTO entradas (titulo, descripcion, categoria_id, usuario_id, fecha) VALUES ('$titulo', '$descripcion', '$categoria_id', '{$_SESSION['id']}', NOW())";
-
-    if ($conexion->query($sql) === TRUE) {
-        header("Location: index.php");
-        exit();
-    } else {
-        echo "Error: " . $sql . "<br>" . $conexion->error;
-    }
-}
+require_once("includes/conexion.php");
 ?>
-<div id="principal">
-    <h1>Crear Nueva Entrada</h1>
-    <form action="crear-entrada.php" method="post">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Entrada</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+    <br>
+    <?php include 'includes/header.php'; ?>
+    <br>
+    <h2><center>Crear Nueva Entrada</center></h2>
+    <br>
+    <form action="guardar-entrada.php" method="POST">
         <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo" required><br><br>
-        
-        <label for="descripcion">Contenido:</label>
-        <textarea id="descripcion" name="descripcion" required></textarea><br><br>
-        
+        <input type="text" name="titulo" required> <br>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea name="descripcion" required></textarea> <br>
+
         <label for="categoria">Categoría:</label>
-        <select id="categoria" name="categoria" required>
+        <select name="categoria" required>
+            <option value="">Seleccione una categoría</option>
             <?php
-            $categoria_result = $conexion->query("SELECT id, nombre FROM categorias");
-            if ($categoria_result->num_rows > 0) {
-                while ($categoria_row = $categoria_result->fetch_assoc()) {
-                    echo "<option value='{$categoria_row['id']}'>{$categoria_row['nombre']}</option>";
-                }
-            } else {
-                echo "<option value=''>No hay categorías disponibles</option>";
+            $sql = "SELECT id, nombre FROM categorias";
+            $resultado = $conexion->query($sql);
+
+            if (!$resultado) {
+                die("Error al obtener las categorías: ".$conexion->error);
+            }
+
+            while($row = $resultado->fetch_assoc()) {
+                echo "<option value='" . htmlspecialchars($row['id']) . "'>" . htmlspecialchars($row['nombre']) . "</option>";
             }
             ?>
-        </select><br><br>
-        
-        <input type="submit" value="Crear Entrada">
+        </select> <br>
+
+        <center><button type="submit" class="boton boton-azul"> Publicar</button></center> 
     </form>
-    </div>
+
+    <h2>Entradas recientes</h2>
+    <br>
     <?php include 'includes/footer.php'; ?>
+    <br>
+</body>
+</html>
+

@@ -30,6 +30,8 @@ $resultado = mysqli_query($conexion, $sql);
                         <?=mb_substr($entrada['descripcion'], 0, 150) . '...'?> <!-- Muestra solo 150 caracteres -->
                     </p>
                 </a>
+                <br>
+                <a href="editar_entradas.php?id=<?=$entrada['id']?>" class="boton boton-verde">Editar Entradas</a>
             </article>
         <?php endwhile; ?>
     <?php else: ?>
@@ -37,8 +39,9 @@ $resultado = mysqli_query($conexion, $sql);
     <?php endif; ?>
     
     <div id="ver-todas">
+        <br>
         <center><button type="button" onclick="window.location.href='index.php'" class="boton boton-azul">Volver al inicio</button></center>
-        <center><button type="button" onclick="window.location.href='editar_entradas.php'" class="boton boton-verde"> Editar Entradas</button></center>
+        <br>
     </div>
 </div> <!-- fin principal -->
 

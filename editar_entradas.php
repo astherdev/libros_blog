@@ -1,21 +1,14 @@
 <?php
 session_start();
-require_once("includes/conexion.php");
+require_once 'includes/conexion.php';
 
-// Verificar si el usuario ha iniciado sesión
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: index.php");
-    exit();
-}
-
-// Verificar si se recibe el ID de la entrada
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     die("Error: ID de entrada no especificado.");
 }
 
 $id_entrada = intval($_GET['id']);
 
-// Obtener los datos de la entrada
+// Obtener datos de la entrada
 $stmt = $conexion->prepare("SELECT * FROM entradas WHERE id = ?");
 $stmt->bind_param("i", $id_entrada);
 $stmt->execute();
@@ -26,8 +19,8 @@ if (!$entrada) {
     die("Error: Entrada no encontrada.");
 }
 
-// Procesar edición
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['eliminar'])) {
+// Procesar actualización
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['guardar'])) {
     $titulo = trim($_POST['titulo']);
     $descripcion = trim($_POST['descripcion']);
     $categoria_id = intval($_POST['categoria']);
@@ -38,27 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['eliminar'])) {
 
         if ($stmt->execute()) {
             $_SESSION['mensaje_exito'] = "Entrada actualizada correctamente.";
-            header("Location: index.php");
+            header("Location: entrada.php?id=$id_entrada");
             exit();
         } else {
-            echo "Error al actualizar la entrada.";
+            $_SESSION['mensaje_error'] = "Error al actualizar la entrada.";
         }
     } else {
-        echo "Todos los campos son obligatorios.";
-    }
-}
-
-// Procesar eliminación
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar'])) {
-    $stmt = $conexion->prepare("DELETE FROM entradas WHERE id = ?");
-    $stmt->bind_param("i", $id_entrada);
-
-    if ($stmt->execute()) {
-        $_SESSION['mensaje_exito'] = "Entrada eliminada correctamente.";
-        header("Location: index.php");
-        exit();
-    } else {
-        echo "Error al eliminar la entrada.";
+        $_SESSION['mensaje_error'] = "Todos los campos son obligatorios.";
     }
 }
 ?>
@@ -69,17 +48,101 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Entrada</title>
-    <link rel="stylesheet" href="/libros/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Estilo del fondo del popup */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        /* Estilo del popup */
+        .popup {
+            background: white;
+            width: 40%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-header {
+            background: #007BFF;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-size: 18px;
+        }
+
+        .popup-body {
+            padding: 20px;
+            font-size: 16px;
+        }
+
+        .popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .boton-azul {
+            background: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .boton-rojo {
+            background: #FF0000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .boton-azul:hover {
+            background: #0056b3;
+        }
+
+        .boton-rojo:hover {
+            background: #cc0000;
+        }
+    </style>
     <script>
-        function confirmarEliminacion() {
-            return confirm("¿Estás seguro de que deseas eliminar esta entrada?");
+        function mostrarPopup() {
+            document.getElementById('popup-eliminar').style.display = 'block';
+        }
+
+        function cerrarPopup() {
+            document.getElementById('popup-eliminar').style.display = 'none';
         }
     </script>
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
+
     <div class="container">
-        <h2>Editar Entrada</h2>
+        <br>
+        <center><h2>Editar Entrada</h2></center>
+        <br>
+
         <form method="post">
             <label>Título:</label>
             <input type="text" name="titulo" value="<?= htmlspecialchars($entrada['titulo']) ?>" required>
@@ -100,17 +163,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar'])) {
                 ?>
             </select>
 
-            <button type="submit" class="boton boton-verde">Guardar Cambios</button>
+            <center><button type="submit" name="guardar" class="boton boton-verde">Guardar Cambios</button></center>
         </form>
 
-        <!-- Botón para eliminar -->
-        <form method="post" onsubmit="return confirmarEliminacion();">
-            <input type="hidden" name="eliminar" value="true">
-            <button type="submit" class="boton boton-rojo">Eliminar Entrada</button>
-        </form>
+        <!-- Botón para abrir el popup -->
+        <center><button onclick="mostrarPopup()" class="boton boton-rojo">Eliminar Entrada</button></center>
 
-        <button onclick="window.location.href='index.php'" class="boton boton-azul">Cancelar</button>
+        <!-- Popup de confirmación de eliminación -->
+        <div id="popup-eliminar" class="popup-overlay">
+            <div class="popup">
+                <div class="popup-header">
+                    <strong>Confirmar Eliminación</strong>
+                </div>
+                <div class="popup-body">
+                    <p>¿Estás seguro de que deseas eliminar esta entrada?</p>
+                </div>
+                <div class="popup-buttons">
+                    <form action="eliminar-entrada.php" method="post">
+                        <input type="hidden" name="id" value="<?= $id_entrada ?>">
+                        <center><button type="submit" class="boton-rojo">Eliminar</button></center>
+                    </form>
+                    <center><button onclick="cerrarPopup()" class="boton-azul">Cancelar</button></center>
+                </div>
+            </div>
+        </div>
+
+        <center><button onclick="window.location.href='entrada.php?id=<?= $id_entrada ?>'" class="boton boton-azul">Cancelar</button></center>
     </div>
+
     <?php include 'includes/footer.php'; ?>
 </body>
 </html>
