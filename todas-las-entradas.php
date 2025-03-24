@@ -31,7 +31,7 @@ $resultado = mysqli_query($conexion, $sql);
                     </p>
                 </a>
                 <br>
-                <a href="editar_entradas.php?id=<?=$entrada['id']?>" class="boton boton-verde">Editar Reseñas</a>
+                <a href="editar_entradas.php?id=<?=$entrada['id']?>" class="boton boton-verde">Editar Libro</a>
             </article>
         <?php endwhile; ?>
     <?php else: ?>

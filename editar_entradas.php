@@ -167,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['guardar'])) {
         </form>
 
         <!-- Botón para abrir el popup -->
-        <center><button onclick="mostrarPopup()" class="boton boton-rojo">Eliminar Reseña</button></center>
+        <center><button onclick="mostrarPopup()" class="boton boton-rojo">Eliminar Libro</button></center>
 
         <!-- Popup de confirmación de eliminación -->
         <div id="popup-eliminar" class="popup-overlay">
