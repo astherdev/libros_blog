@@ -16,7 +16,7 @@ $resultado = mysqli_query($conexion, $sql);
 
 <!-- CAJA PRINCIPAL -->
 <div id="principal">
-    <h1>Últimas entradas</h1>
+    <h1>Últimas reseñas</h1>
 
     <?php while ($entrada = mysqli_fetch_assoc($resultado)): ?>
         <article class="entrada">
@@ -34,7 +34,7 @@ $resultado = mysqli_query($conexion, $sql);
     <?php endwhile; ?>
 
     <div id="ver-todas">
-        <center><button type="button" onclick="window.location.href='todas-las-entradas.php'" class="boton boton-azul">Ver todas las entradas</button></center>
+        <center><button type="button" onclick="window.location.href='todas-las-entradas.php'" class="boton boton-azul">Ver todas las reseñas</button></center>
     </div>
 </div> 
 

@@ -39,7 +39,7 @@ $resultado = mysqli_query($conexion, $sql);
                 };
                 ?>
                 <li>
-                    <a href="sobre-mi.php">Sobre mí</a>
+                    <a href="sobre-nosotros.php">Sobre Nosotros</a>
                 </li>
                 <li>
                     <a href="contacto.php">Contacto</a>

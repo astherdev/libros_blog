@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['guardar'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Entrada</title>
+    <title>Editar Reseña</title>
     <link rel="stylesheet" href="/css/style.css">
     <style>
         /* Estilo del fondo del popup */
@@ -140,19 +140,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['guardar'])) {
 
     <div class="container">
         <br>
-        <center><h2>Editar Entrada</h2></center>
+        <center><h2>Editar Reseña</h2></center>
         <br>
 
         <form method="post">
             <label>Título:</label>
             <input type="text" name="titulo" value="<?= htmlspecialchars($entrada['titulo']) ?>" required>
 
-            <label>Descripción:</label>
+            <label>Tu reseña:</label>
             <textarea name="descripcion" required><?= htmlspecialchars($entrada['descripcion']) ?></textarea>
 
-            <label>Categoría:</label>
+            <label>Género literario:</label>
             <select name="categoria" required>
-                <option value="">Seleccione una categoría</option>
+                <option value="">Seleccione un género</option>
                 <?php
                 $sql = "SELECT id, nombre FROM categorias";
                 $resultado = $conexion->query($sql);
@@ -167,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['guardar'])) {
         </form>
 
         <!-- Botón para abrir el popup -->
-        <center><button onclick="mostrarPopup()" class="boton boton-rojo">Eliminar Entrada</button></center>
+        <center><button onclick="mostrarPopup()" class="boton boton-rojo">Eliminar Reseña</button></center>
 
         <!-- Popup de confirmación de eliminación -->
         <div id="popup-eliminar" class="popup-overlay">
@@ -176,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['guardar'])) {
                     <strong>Confirmar Eliminación</strong>
                 </div>
                 <div class="popup-body">
-                    <p>¿Estás seguro de que deseas eliminar esta entrada?</p>
+                    <p>¿Estás seguro de que deseas eliminar esta reseña?</p>
                 </div>
                 <div class="popup-buttons">
                     <form action="eliminar-entrada.php" method="post">

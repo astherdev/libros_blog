@@ -18,7 +18,7 @@ $resultado = mysqli_query($conexion, $sql);
 
 <!-- CAJA PRINCIPAL -->
 <div id="principal">
-    <h1>Todas las entradas</h1>
+    <h1>Todas las reseñas</h1>
 
     <?php if (mysqli_num_rows($resultado) > 0): ?>
         <?php while ($entrada = mysqli_fetch_assoc($resultado)): ?>
@@ -31,7 +31,7 @@ $resultado = mysqli_query($conexion, $sql);
                     </p>
                 </a>
                 <br>
-                <a href="editar_entradas.php?id=<?=$entrada['id']?>" class="boton boton-verde">Editar Entradas</a>
+                <a href="editar_entradas.php?id=<?=$entrada['id']?>" class="boton boton-verde">Editar Reseñas</a>
             </article>
         <?php endwhile; ?>
     <?php else: ?>

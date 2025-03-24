@@ -33,7 +33,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
 
 <div id="principal">
-    <h1>Entradas en la categoría: <?= isset($categoria) ? htmlspecialchars($categoria['nombre']) : 'Categoría no encontrada'; ?></h1>
+    <h1>Reseñas en la categoría: <?= isset($categoria) ? htmlspecialchars($categoria['nombre']) : 'Categoría no encontrada'; ?></h1>
 
     <?php if (mysqli_num_rows($resultado_entradas) > 0): ?>
         <?php while ($entrada = mysqli_fetch_assoc($resultado_entradas)): ?>
@@ -48,7 +48,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             </article>
         <?php endwhile; ?>
     <?php else: ?>
-        <p>No hay entradas en esta categoría.</p>
+        <p>No hay reseñas para este género literario.</p>
     <?php endif; ?>
 </div>
 <?php include 'includes/footer.php'; ?>

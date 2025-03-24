@@ -5,11 +5,11 @@ require_once 'includes/sidebar.php';
 ?>
 <div id="principal">
     <br>
-    <h1>Crear nueva categoría</h1>
+    <h1>Crear un nuevo género literario</h1>
     <br>
     
     <form action="guardar-categoria.php" method="POST">
-        <label for="nombre">Nombre de la categoría:</label>
+        <label for="nombre">Nombre del género:</label>
         <input type="text" name="nombre" required>
         
         <input type="submit" value="Guardar">
