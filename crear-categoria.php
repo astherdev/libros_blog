@@ -1,16 +1,9 @@
 <?php
 require_once ("includes/conexion.php");
+require_once 'includes/header.php';
+require_once 'includes/sidebar.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Crear Categoría</title>
-    <link rel="stylesheet" type="text/css" href="/libros/css/style.css">
-</head>
-<body>
-    <?php include 'includes/header.php'; ?>
+<div id="principal">
     <br>
     <h1>Crear nueva categoría</h1>
     <br>
@@ -24,6 +17,5 @@ require_once ("includes/conexion.php");
     <button type="button" onclick="window.location.href='index.php'" class="boton boton-azul"> Volver al Inicio</button>
 
     <br>
+    </div>
     <?php include 'includes/footer.php'; ?>
-</body>
-</html>

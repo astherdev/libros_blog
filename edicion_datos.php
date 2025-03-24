@@ -1,6 +1,7 @@
 <?php
-session_start();
 require_once 'includes/conexion.php';
+require_once 'includes/header.php';
+require_once 'includes/sidebar.php';
 
 // Verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['id'])) {
@@ -69,17 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Datos</title>
-    <link rel="stylesheet" href="includes/styles.css">
-</head>
-<body>
-    <?php include 'includes/header.php'; ?>
-
+<div id="principal">
     <div class="container">
         <h2>Editar Mis Datos</h2>
         
@@ -109,7 +100,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <center><button onclick="window.location.href='mis-datos.php'" class="boton boton-azul">Cancelar</button></center>
     </div>
+    </div>
 
     <?php include 'includes/footer.php'; ?>
-</body>
-</html>

@@ -1,6 +1,7 @@
 <?php
-    session_start();
     require_once 'includes/conexion.php';
+    require_once 'includes/header.php';
+    require_once 'includes/sidebar.php';
 
     // Verificar si la sesión está iniciada correctamente
     if (!isset($_SESSION['id'])) {
@@ -36,34 +37,21 @@
         'email' => $_SESSION['email']
     ];
     ?>
+<div id="principal">
+    <div class="container">
+        <h2>Mis Datos</h2>
+        <form>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" readonly>
 
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mis Datos</title>
-        <link rel="stylesheet" href="includes/styles.css">
-    </head>
-    <body>
-        <?php include 'includes/header.php'; ?>
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos" value="<?= htmlspecialchars($usuario['apellidos']) ?>" readonly>
 
-        <div class="container">
-            <h2>Mis Datos</h2>
-            <form>
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" value="<?= htmlspecialchars($usuario['nombre']) ?>" readonly>
+            <label for="email">Email:</label>
+            <input type="email" id="email" value="<?= htmlspecialchars($usuario['email']) ?>" readonly>
 
-                <label for="apellidos">Apellidos:</label>
-                <input type="text" id="apellidos" value="<?= htmlspecialchars($usuario['apellidos']) ?>" readonly>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" value="<?= htmlspecialchars($usuario['email']) ?>" readonly>
-
-                <center><button type="button" onclick="window.location.href='edicion_datos.php'" class="boton boton-naranja">Editar Datos</button></center>
-            </form>
-        </div>
-
-        <?php include 'includes/footer.php'; ?>
-    </body>
-    </html>
+            <center><button type="button" onclick="window.location.href='edicion_datos.php'" class="boton boton-naranja">Editar Datos</button></center>
+        </form>
+    </div>
+    </div>
+    <?php require_once 'includes/footer.php'; ?>

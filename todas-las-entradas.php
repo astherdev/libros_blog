@@ -4,7 +4,7 @@ require_once 'includes/header.php';
 require_once 'includes/sidebar.php';
 
 // Consulta para obtener todas las entradas
-$sql = "SELECT e.id, e.titulo, e.descripcion, e.fecha, c.nombre AS categoria, u.nombre AS usuario 
+$sql = "SELECT e.id, e.titulo, e.descripcion, e.fecha, c.nombre AS categoria, u.nombre AS usuario , u.apellidos AS apellido
         FROM entradas e
         JOIN categorias c ON e.categoria_id = c.id
         JOIN usuarios u ON e.usuario_id = u.id
@@ -25,7 +25,7 @@ $resultado = mysqli_query($conexion, $sql);
             <article class="entrada">
                 <a href="entrada.php?id=<?=$entrada['id']?>">
                     <h2><?=$entrada['titulo']?></h2>
-                    <span class="fecha"><strong><?=$entrada['fecha']?> | <?=$entrada['usuario']?> | Categoría: <?=$entrada['categoria']?></strong></span>
+                    <span class="fecha"><strong><?=$entrada['fecha']?> | <?=$entrada['usuario']?>  <?=$entrada['apellido']?> | Categoría: <?=$entrada['categoria']?></strong></span>
                     <p>
                         <?=mb_substr($entrada['descripcion'], 0, 150) . '...'?> <!-- Muestra solo 150 caracteres -->
                     </p>

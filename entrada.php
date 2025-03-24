@@ -6,7 +6,8 @@ require_once 'includes/sidebar.php';
 // Obtener la entrada según el ID de la URL
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $sql = "SELECT * FROM entradas WHERE id = $id";
+    $sql = "SELECT e.*, u.nombre, u.apellidos FROM entradas e ".
+            "INNER JOIN usuarios u ON e.usuario_id = u.id WHERE e.id = $id";
     $resultado = mysqli_query($conexion, $sql);
 
     if ($resultado && mysqli_num_rows($resultado) == 1) {
@@ -23,8 +24,13 @@ if (isset($_GET['id'])) {
 
 <!-- CAJA PRINCIPAL -->
 <div id="principal">
-    <h1><?=$entrada['titulo']?></h1>
-    <span class="fecha"><strong><?=$entrada['fecha']?></strong></span>
+<article class="entrada">
+    <a href="entrada.php?id=<?=$entrada['id']?>">  
+        <h2><?=$entrada['titulo']?></h2>
+    </a>
+    <span class="fecha">
+    <strong><?=$entrada['nombre']?> <?=$entrada['apellidos']?> | <?=$entrada['fecha']?></strong>
+    </span>
     <p><?=$entrada['descripcion']?></p>
     <a href="index.php" class="boton boton-azul">Volver</a>
 </div> 

@@ -24,11 +24,10 @@ $resultado = mysqli_query($conexion, $sql);
                 <h2><?=$entrada['titulo']?></h2>
             </a>
             <span class="fecha">
-            <strong><?=$entrada['nombre']?> <?=$entrada['apellidos']?></strong>
-
+            <strong><?=$entrada['nombre']?> <?=$entrada['apellidos']?> | <?=$entrada['fecha']?></strong>
             </span>
             <p>
-                <?=substr($entrada['descripcion'], 0, 150) . '...'?> <!-- Muestra los primeros 150 caracteres -->
+                <?=substr($entrada['descripcion'], 0, 150) . '...'?> 
             </p>
             <a href="entrada.php?id=<?=$entrada['id']?>" class="boton boton-azul">Leer más</a>
         </article>

@@ -1,5 +1,9 @@
 <?php
-session_start();
+require_once 'includes/conexion.php';
+require_once 'includes/header.php';
+require_once 'includes/sidebar.php';
+
+
 if(!isset($_SESSION['id'])) {
     header("Location: index.php");
     exit();
@@ -22,14 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Crear Entrada</title>
-</head>
-<body>
+<div id="principal">
     <h1>Crear Nueva Entrada</h1>
     <form action="crear-entrada.php" method="post">
         <label for="titulo">Título:</label>
@@ -54,5 +51,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <input type="submit" value="Crear Entrada">
     </form>
-</body>
-</html>
+    </div>
+    <?php include 'includes/footer.php'; ?>
