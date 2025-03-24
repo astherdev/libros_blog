@@ -3,9 +3,16 @@ require_once 'includes/conexion.php';
 require_once 'includes/header.php';
 require_once 'includes/sidebar.php';
 
-$sql = "SELECT * FROM entradas ORDER BY fecha DESC LIMIT 5";
+// Obtener todas las entradas de la base de datos
+$sql = "SELECT e.*, u.nombre, u.apellidos 
+        FROM entradas e 
+        JOIN usuarios u ON e.usuario_id = u.id 
+        ORDER BY e.fecha DESC";
+
 $resultado = mysqli_query($conexion, $sql);
 ?>
+
+
 
 <!-- CAJA PRINCIPAL -->
 <div id="principal">
@@ -13,20 +20,24 @@ $resultado = mysqli_query($conexion, $sql);
 
     <?php while ($entrada = mysqli_fetch_assoc($resultado)): ?>
         <article class="entrada">
-            <a href="entradas.php?id=<?=$entrada['id']?>">
+            <a href="entrada.php?id=<?=$entrada['id']?>">  
                 <h2><?=$entrada['titulo']?></h2>
-                <span class="fecha"><strong><?=$entrada['fecha']?> | <?=$_SESSION['usuario_nombre'] . ' ' . $_SESSION['usuario_apellidos']?></strong></span>
-                <p>
-                    <?=substr($entrada['descripcion'], 0, 100) . '...'?> <!-- Muestra los 100 primeros carácteres -->
-                </p>
             </a>
+            <span class="fecha">
+            <strong><?=$entrada['nombre']?> <?=$entrada['apellidos']?></strong>
+
+            </span>
+            <p>
+                <?=substr($entrada['descripcion'], 0, 150) . '...'?> <!-- Muestra los primeros 150 caracteres -->
+            </p>
+            <a href="entrada.php?id=<?=$entrada['id']?>" class="boton boton-azul">Leer más</a>
         </article>
     <?php endwhile; ?>
-    
+
     <div id="ver-todas">
-        <center><button type="button" onclick="window.location.href='todas-las-entradas.php'" class="boton boton-azul"> Ver todas las entradas</button></center>
+        <center><button type="button" onclick="window.location.href='todas-las-entradas.php'" class="boton boton-azul">Ver todas las entradas</button></center>
     </div>
-</div> <!--fin principal-->
+</div> 
 
 <?php require_once 'includes/footer.php'; ?>
 
@@ -92,4 +103,3 @@ if (isset($_SESSION['mensaje'])): ?>
 
     <?php unset($_SESSION['mensaje']); unset($_SESSION['tipo_mensaje']); ?>
 <?php endif; ?>
-

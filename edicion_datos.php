@@ -50,8 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if ($stmt->affected_rows >= 0) {
+            // ✅ ACTUALIZAR LOS DATOS EN LA SESIÓN
+            $_SESSION['nombre'] = $nombre;
+            $_SESSION['apellidos'] = $apellidos;
+            $_SESSION['email'] = $email;
+
             $_SESSION['mensaje_exito'] = "Datos editados correctamente.";
-            header("Location: index.php"); // Ahora redirige a `index.php`
+            header("Location: mis-datos.php"); // Ahora redirige a `mis-datos.php`
             exit();
         } else {
             $_SESSION['error'] = "No se realizaron cambios en la base de datos.";

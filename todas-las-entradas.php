@@ -27,7 +27,7 @@ $resultado = mysqli_query($conexion, $sql);
                     <h2><?=$entrada['titulo']?></h2>
                     <span class="fecha"><strong><?=$entrada['fecha']?> | <?=$entrada['usuario']?> | Categoría: <?=$entrada['categoria']?></strong></span>
                     <p>
-                        <?=substr($entrada['descripcion'], 0, 150) . '...'?> <!-- Muestra solo 150 caracteres -->
+                        <?=mb_substr($entrada['descripcion'], 0, 150) . '...'?> <!-- Muestra solo 150 caracteres -->
                     </p>
                 </a>
             </article>

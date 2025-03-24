@@ -14,17 +14,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario_id = $_SESSION['usuario_id'];
 
     if (!empty($titulo) && !empty($descripcion) && $categoria_id > 0) {
-        $stmt = $conexion->prepare("INSERT INTO entradas (usuario_id, categoria_id, titulo, descripcion, fecha) VALUES (?, ?, ?, ?, NOW())");
-        $stmt->bind_param("iiss", $usuario_id, $categoria_id, $titulo, $descripcion);
+        // Verificar si la categoría existe
+        $stmt = $conexion->prepare("SELECT id FROM categorias WHERE id = ?");
+        $stmt->bind_param("i", $categoria_id);
+        $stmt->execute();
+        $stmt->store_result();
 
-        if ($stmt->execute()) {
-            echo "Entrada creada con exito. <a href='index.php'>Volver</a>";
+        if ($stmt->num_rows > 0) {
+            $stmt->close();
+
+            // Insertar la entrada
+            $stmt = $conexion->prepare("INSERT INTO entradas (usuario_id, categoria_id, titulo, descripcion, fecha) VALUES (?, ?, ?, ?, NOW())");
+            $stmt->bind_param("iiss", $usuario_id, $categoria_id, $titulo, $descripcion);
+
+            if ($stmt->execute()) {
+                echo "Entrada creada con exito. <a href='index.php'>Volver</a>";
+            } else {
+                echo "Error al guardar la entrada";
+            }
+
+            $stmt->close();
         } else {
-            echo "Error al guardar la entrada";
+            echo "La categoría no existe.";
         }
-
-        $stmt->close();
-         
     } else {
         echo "Todos los campos son obligatorios.";
     }

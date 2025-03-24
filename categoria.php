@@ -1,17 +1,14 @@
 <?php
 require_once 'includes/conexion.php';
 
-if (isset($_GET['id'])) {
-    $id_categoria = (int) $_GET['id']; // Convierte a entero
-} else {
-    $id_categoria = 0; // Valor por defecto
-}
+// ID de la categoría que deseas mostrar en el index
+$id_categoria = 1; // Cambia este valor al ID de la categoría que deseas mostrar
 
 $sql = "SELECT * FROM entradas WHERE categoria_id = $id_categoria ORDER BY fecha DESC";
 $resultado = mysqli_query($conexion, $sql);
 ?>
 
-<h1>Entradas en esta categoría</h1>
+<h1>Entradas en la categoría específica</h1>
 
 <?php while ($entrada = mysqli_fetch_assoc($resultado)){ ?>
     <article>
