@@ -184,7 +184,7 @@ input[type="submit"],
 
 
 /*PRINCIPAL*/
-#principal{
+#principal, .container-sobre-nosotros, .contacto{
     float: left;
     width: 65%;
     min-height: 572px;

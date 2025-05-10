@@ -1,177 +1,104 @@
-<!DOCTYPE HTML>
-<html lang="es">
-    <head>
-        <meta charset="utf-8" />
-        <title>Blog de Libros</title>
-        <link rel="stylesheet" type="text/css" href="style.css" />
-    </head>
-    <body>
-        <!-- CABECERA -->
-        <header id="cabecera">
-            <!-- LOGO -->
-            <div id="logo">
-                <a href="index.php">
-                    Blog de Libros
-                </a>
-            </div>
-            
-            <!-- MENU -->
-            <nav id="menu">
-                <ul>
-                    <li>
-                        <a href="index.php">Inicio</a>
-                    </li>
-                    <li>
-                        <a href="index.php">{Categorias}</a>
-                    </li>
-                    <li>
-                        <a href="index.php">{Categorias}</a>
-                    </li>
-                    <li>
-                        <a href="index.php">{Categorias}</a>
-                    </li>
-                    <li>
-                        <a href="index.php">Sobre mí</a>
-                    </li>
-                    <li>
-                        <a href="index.php">Contacto</a>
-                    </li>
-                </ul>
-            </nav>
-            
-            <div class="clearfix"></div>
-        </header>
-        
-        <div id="contenedor">
-            <!-- BARRA LATERAL -->
-            <aside id="sidebar">
-                <div id="buscador" class="bloque">
-                    <h3>Buscar</h3>
-                    <form action="buscar.php" method="POST"> 
-                        <input type="text" name="busqueda" />
-                        <input type="submit" value="Buscar" />
-                    </form>
-                </div>
-                
-                <div id="usuario-logueado" class="bloque">
-                    <h3>Bienvenido, {Nombre Usuario}</h3>
-                    <!--botones-->
-                    <a href="crear-entradas.php" class="boton boton-verde">{Crear entradas}</a>
-                    <a href="crear-categoria.php" class="boton">{Crear categoria}</a>
-                    <a href="mis-datos.php" class="boton boton-naranja">{Mis datos}</a>
-                    <a href="cerrar.php" class="boton boton-rojo">{Cerrar sesión}</a>
-                </div>
-                
-                <div id="login" class="bloque">
-                    <h3>Inicia Sesión</h3>
-                    <div class="alerta alerta-error">
-                        {Usuario no existe}
-                    </div>
-                    
-                    <form action="login.php" method="POST"> 
-                        <label for="email">Email</label>
-                        <input type="email" name="email" />
-                        
-                        <label for="password">Contraseña</label>
-                        <input type="password" name="password" />
-                        
-                        <input type="submit" value="Entrar" />
-                    </form>
-                </div>
-                
-                <div id="register" class="bloque">
-                    <h3>Registrarse</h3>
-                    
-                    <!-- Mostrar errores -->
-                    <div class="alerta alerta-exito">
-                        {Se registro correctamente}
-                    </div>
-                    <div class="alerta alerta-error">
-                        {Error en algun dato}
-                    </div>
-                    
-                    <form action="registro.php" method="POST"> 
-                        <label for="nombre">Nombre</label>
-                        <input type="text" name="nombre" />
-                        
-                        <label for="apellidos">Apellidos</label>
-                        <input type="text" name="apellidos" />
-                        
-                        <label for="email">Email</label>
-                        <input type="email" name="email" />
-                        
-                        <label for="password">Contraseña</label>
-                        <input type="password" name="password" />
-                        
-                        <input type="submit" name="submit" value="Registrar" />
-                    </form>
-                </div>
-            </aside>
-            
-            <!-- CAJA PRINCIPAL -->
-            <div id="principal">
-                <h1>Últimas entradas</h1>
-                <article class="entrada">
-                    <a href="entrada.php?id=<?=$entrada['id']?>">
-                        <h2>{Titulo Entrada}</h2>
-                        <span class="fecha">{Categoria} | {Fecha de publicación}</span>
-                        <p>
-                            {Descripcion de entrada}
-                        </p>
-                    </a>
-                </article>
-                
-                <article class="entrada">
-                    <a href="entrada.php?id=<?=$entrada['id']?>">
-                        <h2>{Titulo Entrada}</h2>
-                        <span class="fecha">{Categoria} | {Fecha de publicación}</span>
-                        <p>
-                            {Descripcion de entrada}
-                        </p>
-                    </a>
-                </article>
-                
-                <article class="entrada">
-                    <a href="entrada.php?id=<?=$entrada['id']?>">
-                        <h2>{Titulo Entrada}</h2>
-                        <span class="fecha">{Categoria} | {Fecha de publicación}</span>
-                        <p>
-                            {Descripcion de entrada}
-                        </p>
-                    </a>
-                </article>
-                
-                <article class="entrada">
-                    <a href="entrada.php?id=<?=$entrada['id']?>">
-                        <h2>{Titulo Entrada}</h2>
-                        <span class="fecha">{Categoria} | {Fecha de publicación}</span>
-                        <p>
-                            {Descripcion de entrada}
-                        </p>
-                    </a>
-                </article>
-                
-                <article class="entrada">
-                    <a href="entrada.php?id=<?=$entrada['id']?>">
-                        <h2>{Titulo Entrada}</h2>
-                        <span class="fecha">{Categoria} | {Fecha de publicación}</span>
-                        <p>
-                            {Descripcion de entrada}
-                        </p>
-                    </a>
-                </article>
-                
-                <div id="ver-todas">
-                    <a href="entradas.php">Ver todas las entradas</a>
-                </div>
-            </div> <!--fin principal-->
-            
-        </div> <!-- fin contenedor -->
-        
-        <!-- PIE DE PÁGINA -->
-        <footer id="pie">
-            <p>Desarrollado por {Nombre Aprendiz} &copy; {Año actual}</p>
-        </footer>
-        
-    </body>
-</html>
+<?php
+require_once 'includes/conexion.php';
+require_once 'includes/header.php';
+require_once 'includes/sidebar.php';
+
+// Obtener todas las entradas de la base de datos
+$sql = "SELECT e.*, u.nombre, u.apellidos 
+        FROM entradas e 
+        JOIN usuarios u ON e.usuario_id = u.id 
+        ORDER BY e.fecha DESC";
+
+$resultado = mysqli_query($conexion, $sql);
+?>
+
+
+
+<!-- CAJA PRINCIPAL -->
+<div id="principal">
+    <h1>Últimas reseñas</h1>
+
+    <?php while ($entrada = mysqli_fetch_assoc($resultado)): ?>
+        <article class="entrada">
+            <a href="entrada.php?id=<?=$entrada['id']?>">  
+                <h2><?=$entrada['titulo']?></h2>
+            </a>
+            <span class="fecha">
+            <strong><?=$entrada['nombre']?> <?=$entrada['apellidos']?> | <?=$entrada['fecha']?></strong>
+            </span>
+            <p>
+                <?=substr($entrada['descripcion'], 0, 150) . '...'?> 
+            </p>
+            <a href="entrada.php?id=<?=$entrada['id']?>" class="boton boton-azul">Leer más</a>
+        </article>
+    <?php endwhile; ?>
+
+    <div id="ver-todas">
+        <center><button type="button" onclick="window.location.href='todas-las-entradas.php'" class="boton boton-azul">Ver todas las reseñas</button></center>
+    </div>
+</div> 
+
+<?php require_once 'includes/footer.php'; ?>
+
+<?php
+if (isset($_SESSION['mensaje'])): ?>
+    <div id="popup-mensaje" class="popup <?=$_SESSION['tipo_mensaje']?>">
+        <p><?=$_SESSION['mensaje']?></p>
+        <button onclick="cerrarPopup()">Cerrar</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("popup-mensaje").style.display = "block";
+        });
+
+        function cerrarPopup() {
+            document.getElementById("popup-mensaje").style.display = "none";
+        }
+    </script>
+
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #E3F2FD; /* Azul claro */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            z-index: 1000;
+            text-align: center;
+            width: 300px;
+            font-family: Arial, sans-serif;
+        }
+
+        .popup.exito {
+            border: 3px solid #64B5F6; /* Azul medio */
+            color: #1565C0; /* Azul oscuro */
+        }
+
+        .popup.error {
+            border: 3px solid #42A5F5; /* Azul más oscuro */
+            color: #0D47A1; /* Azul profundo */
+        }
+
+        .popup button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: #1E88E5; /* Azul brillante */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .popup button:hover {
+            background: #1565C0; /* Azul más oscuro en hover */
+        }
+    </style>
+
+    <?php unset($_SESSION['mensaje']); unset($_SESSION['tipo_mensaje']); ?>
+<?php endif; ?>
